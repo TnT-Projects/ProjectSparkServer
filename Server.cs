@@ -92,25 +92,41 @@ namespace ProjectSparkServer
                 serverResponse("Message Reveived: " + Encoding.ASCII.GetString(dataBuffer));
             }
             //Check the message receive and anwser to that message
-            //if(true)
-            //{
-            //    byte[] response = Encoding.ASCII.GetBytes("MESSAGE");
-            //    currentSocket.BeginSend(response, 0, response.Length, SocketFlags.None, new AsyncCallback(SendCallBack), currentSocket);
-            //    if (serverResponse != null)
-            //    {
-            //        serverResponse("Message Sent: " + Encoding.ASCII.GetString(response));
-            //    }
-            //}
-            //else
-            //{
-            //    byte[] response = Encoding.ASCII.GetBytes("INVALID MESSAGE");
-            //    currentSocket.BeginSend(response, 0, response.Length, SocketFlags.None, new AsyncCallback(SendCallBack), currentSocket);
-            //    if (serverResponse != null)
-            //    {
-            //        serverResponse("Message Sent: " + Encoding.ASCII.GetString(response));
-            //    }
-            //}
+            if (Encoding.ASCII.GetString(dataBuffer).Equals("RQ:T"))
+            {
+                List<string> tafels = new List<string>();
+                //id, name, top, right, bottom, left
+                tafels.Add("1|TAFEL 1|135|15|0|0");
+                tafels.Add("2|TAFEL 2|15|250|0|0");
+                tafels.Add("3|TAFEL 3|35|200|0|0");
+                tafels.Add("4|TAFEL 4|861|218|0|0");
 
+
+                foreach (string table in tafels)
+                {
+                    byte[] response = Encoding.ASCII.GetBytes("T|"+table);
+                    currentSocket.BeginSend(response, 0, response.Length, SocketFlags.None, new AsyncCallback(SendCallBack), currentSocket);
+                    if (serverResponse != null)
+                    {
+                        serverResponse("Message Sent: " + Encoding.ASCII.GetString(response));
+                    }
+                }
+
+            }
+            else
+            {
+                byte[] response = Encoding.ASCII.GetBytes("INVALID MESSAGE");
+                currentSocket.BeginSend(response, 0, response.Length, SocketFlags.None, new AsyncCallback(SendCallBack), currentSocket);
+                if (serverResponse != null)
+                {
+                    serverResponse("Message Sent: " + Encoding.ASCII.GetString(response));
+                }
+            }
+            currentSocket.BeginReceive(_buffer, 0, _buffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), currentSocket);
+            if (serverResponse != null)
+            {
+                serverResponse("Receiving from client... " + currentSocket.LocalEndPoint.ToString());
+            }
         }
 
         private void SendCallBack(IAsyncResult ar)
