@@ -1,0 +1,12 @@
+﻿<Window x:Class="ProjectSparkServer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <Button x:Name="btn_ChangeStatus" Content="Start Server" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="497" Click="btn_ChangeStatus_Click"/>
+        <GroupBox Header="Log" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Height="274" Width="497">
+            <ListBox x:Name="lbx_serverLog" HorizontalAlignment="Left" Height="250" VerticalAlignment="Top" Width="485"/>
+        </GroupBox>
+
+    </Grid>
+</Window>
