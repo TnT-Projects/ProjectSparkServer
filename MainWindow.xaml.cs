@@ -30,12 +30,19 @@ namespace ProjectSparkServer
 
         private void getServerResponse(string message)
         {
-            this.lbx_serverLog.Items.Add(message);
+            this.Dispatcher.Invoke((Action)(() =>
+            {
+
+                this.lbx_serverLog.Items.Add(message);
+                this.lbx_serverLog.ScrollIntoView(message);
+            }));
         }
 
         private void btn_ChangeStatus_Click(object sender, RoutedEventArgs e)
         {
             server.StartServer();
+            //Button Content needs to change after clicks...
+            //can be done by checking server-status function
         }
     }
 }

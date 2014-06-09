@@ -91,22 +91,43 @@ namespace ProjectSparkServer
             {
                 serverResponse("Message Reveived: " + Encoding.ASCII.GetString(dataBuffer));
             }
-
-            if(true)
-            {
-                byte[] response = Encoding.ASCII.GetBytes("MESSAGE");
-                currentSocket.BeginSend(response, 0, response.Length, SocketFlags.None, new AsyncCallback(SendCallBack), currentSocket);
-                if (serverResponse != null)
-                {
-                    serverResponse("Message Sent: " + Encoding.ASCII.GetString(response));
-                }
-            }
+            //Check the message receive and anwser to that message
+            //if(true)
+            //{
+            //    byte[] response = Encoding.ASCII.GetBytes("MESSAGE");
+            //    currentSocket.BeginSend(response, 0, response.Length, SocketFlags.None, new AsyncCallback(SendCallBack), currentSocket);
+            //    if (serverResponse != null)
+            //    {
+            //        serverResponse("Message Sent: " + Encoding.ASCII.GetString(response));
+            //    }
+            //}
+            //else
+            //{
+            //    byte[] response = Encoding.ASCII.GetBytes("INVALID MESSAGE");
+            //    currentSocket.BeginSend(response, 0, response.Length, SocketFlags.None, new AsyncCallback(SendCallBack), currentSocket);
+            //    if (serverResponse != null)
+            //    {
+            //        serverResponse("Message Sent: " + Encoding.ASCII.GetString(response));
+            //    }
+            //}
 
         }
 
         private void SendCallBack(IAsyncResult ar)
         {
             ((Socket)ar.AsyncState).EndSend(ar);
+        }
+
+        public bool ServerStarted()
+        {
+            if (this._serverSocket != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
     }
